@@ -1,8 +1,8 @@
 import { Action, ActionPanel, Form, Icon, useNavigation } from "@raycast/api";
 import { useForm } from "@raycast/utils";
 import { ResultView } from "./components/result";
-import { FORMAT_OPTIONS, MotionRequest, OutputFormat, Quality, QUALITY_OPTIONS } from "./lib/types";
-import { EXAMPLE_PROMPTS } from "./constants/example-prompt";
+import { MotionRequest, OutputFormat, Quality } from "./lib/types";
+import { EXAMPLE_PROMPTS, FORMAT_OPTIONS, QUALITY_OPTIONS } from "./constants/";
 
 type FormValues = {
   prompt: string;
