@@ -4,7 +4,7 @@ const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve,
 
 // TODO: Replace with real LLM code generation + manim rendering.
 export async function generateMotion(
-  request: MotionRequest,
+  _request: MotionRequest,
   onStage: (stage: GenerationStage) => void,
 ): Promise<MotionResult> {
   const startedAt = Date.now();
@@ -23,7 +23,7 @@ export async function generateMotion(
 
 
 class MathMotionScene(Scene):
-    # Prompt: ${request.prompt.replace(/\n/g, " ")}
+
     def construct(self):
         axes = Axes(x_range=[-3, 3], y_range=[-1, 9])
         graph = axes.plot(lambda x: x**2, color=BLUE)

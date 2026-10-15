@@ -87,20 +87,22 @@ export function ResultView({ request }: Props) {
 }
 
 function buildMarkdown(request: MotionRequest, stage: GenerationStage, result?: MotionResult, error?: Error): string {
-  const header = `## Prompt\n\n> ${request.prompt.replace(/\n/g, "\n> ")}\n`;
+  const prompt = `## Prompt\n\n> ${request.prompt.replace(/\n/g, "\n> ")}\n\n---\n\n`;
 
   if (error) {
-    return `${header}\n---\n\n**Error:** ${error.message}`;
+    return `${prompt}**Error:** ${error.message}`;
   }
   if (!result) {
-    return `${header}\n---\n\n_${STAGE_LABELS[stage]}_`;
+    return `${prompt}_${STAGE_LABELS[stage]}_`;
   }
 
-  const preview = result.outputPath
+  const { code, outputPath } = result;
+
+  const preview = outputPath
     ? request.format === "gif"
-      ? `![preview](${encodeURI(`file://${result.outputPath}`)})`
-      : `🎬 Rendered to \`${result.outputPath}\` — press ↵ to open.`
+      ? `![preview](${encodeURI(`file://${outputPath}`)})`
+      : `🎬 Rendered to \`${outputPath}\` — press ↵ to open.`
     : "_Preview will appear here once rendering is implemented._";
 
-  return `${header}\n## Preview\n\n${preview}\n\n## Manim Code\n\n\`\`\`python\n${result.code}\`\`\``;
+  return `${prompt}\n\n## Preview\n\n${preview}\n\n## Manim Code\n\n\`\`\`python\n${code}\`\`\``;
 }
