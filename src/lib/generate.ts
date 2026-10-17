@@ -1,4 +1,4 @@
-import { GenerationStage, MotionRequest, MotionResult } from "./types";
+import { GenerationStage, MotionRequest, MotionResult } from "@/lib/types";
 
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 

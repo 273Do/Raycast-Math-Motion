@@ -1,4 +1,4 @@
-import { GenerationStage, OutputFormat, Quality } from "../lib/types";
+import { GenerationStage, OutputFormat, Quality } from "@/lib/types";
 
 export const EXAMPLE_PROMPTS = [
   "Plot y = x^2 and show a tangent line moving along the curve",

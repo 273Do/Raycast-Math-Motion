@@ -2,7 +2,7 @@ import { environment } from "@raycast/api";
 import { execFile, spawn } from "node:child_process";
 import path from "node:path";
 import { promisify } from "node:util";
-import { EnvironmentStatus } from "./types";
+import { EnvironmentStatus } from "@/lib/types";
 
 const execFileAsync = promisify(execFile);
 

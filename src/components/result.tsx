@@ -1,8 +1,8 @@
 import { Action, ActionPanel, Color, Detail, Icon, Keyboard, showToast, Toast } from "@raycast/api";
 import { useEffect, useState } from "react";
-import { generateMotion } from "../lib/generate";
-import { GenerationStage, MotionRequest, MotionResult } from "../lib/types";
-import { FORMAT_OPTIONS, QUALITY_OPTIONS, STAGE_LABELS } from "../constants";
+import { generateMotion } from "@/lib/generate";
+import { GenerationStage, MotionRequest, MotionResult } from "@/lib/types";
+import { FORMAT_OPTIONS, QUALITY_OPTIONS, STAGE_LABELS } from "@/constants";
 
 type Props = { request: MotionRequest };
 

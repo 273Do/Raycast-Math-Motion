@@ -1,8 +1,8 @@
 import { Action, ActionPanel, Color, Detail, Icon, showToast, Toast } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
 import { useState } from "react";
-import { installManim, VENV_DIR } from "../lib/environment";
-import { EnvironmentStatus } from "../lib/types";
+import { installManim, VENV_DIR } from "@/lib/environment";
+import { EnvironmentStatus } from "@/lib/types";
 
 type Props = {
   status: EnvironmentStatus;
