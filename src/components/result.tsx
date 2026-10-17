@@ -86,7 +86,12 @@ export function Result({ request }: Props) {
   );
 }
 
-function buildMarkdown(request: MotionRequest, stage: GenerationStage, result?: MotionResult, error?: Error): string {
+const buildMarkdown = (
+  request: MotionRequest,
+  stage: GenerationStage,
+  result?: MotionResult,
+  error?: Error,
+): string => {
   const prompt = `## Prompt\n\n> ${request.prompt.replace(/\n/g, "\n> ")}\n\n---\n\n`;
 
   if (error) {
@@ -105,4 +110,4 @@ function buildMarkdown(request: MotionRequest, stage: GenerationStage, result?: 
     : "_Preview will appear here once rendering is implemented._";
 
   return `${prompt}\n\n## Preview\n\n${preview}\n\n## Manim Code\n\n\`\`\`python\n${code}\`\`\``;
-}
+};

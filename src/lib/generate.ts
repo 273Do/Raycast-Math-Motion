@@ -3,10 +3,10 @@ import { GenerationStage, MotionRequest, MotionResult } from "@/lib/types";
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 // TODO: Replace with real LLM code generation + manim rendering.
-export async function generateMotion(
+export const generateMotion = async (
   _request: MotionRequest,
   onStage: (stage: GenerationStage) => void,
-): Promise<MotionResult> {
+): Promise<MotionResult> => {
   const startedAt = Date.now();
 
   onStage("generating-code");
@@ -35,4 +35,4 @@ class MathMotionScene(Scene):
 `,
     durationMs: Date.now() - startedAt,
   };
-}
+};
