@@ -6,7 +6,7 @@ import { FORMAT_OPTIONS, QUALITY_OPTIONS, STAGE_LABELS } from "../constants";
 
 type Props = { request: MotionRequest };
 
-export function ResultView({ request }: Props) {
+export function Result({ request }: Props) {
   const [stage, setStage] = useState<GenerationStage>("generating-code");
   const [result, setResult] = useState<MotionResult>();
   const [error, setError] = useState<Error>();

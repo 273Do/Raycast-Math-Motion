@@ -1,8 +1,8 @@
 import { Action, ActionPanel, Form, Icon, useNavigation } from "@raycast/api";
 import { useForm } from "@raycast/utils";
-import { ResultView } from "./components/result";
-import { MotionRequest, OutputFormat, Quality } from "./lib/types";
-import { EXAMPLE_PROMPTS, FORMAT_OPTIONS, QUALITY_OPTIONS } from "./constants";
+import { Result } from "./result";
+import { MotionRequest, OutputFormat, Quality } from "../lib/types";
+import { EXAMPLE_PROMPTS, FORMAT_OPTIONS, QUALITY_OPTIONS } from "../constants";
 
 type FormValues = {
   prompt: string;
@@ -10,7 +10,7 @@ type FormValues = {
   format: string;
 };
 
-export default function Command() {
+export function CreateForm() {
   const { push } = useNavigation();
 
   const { handleSubmit, itemProps, setValue } = useForm<FormValues>({
@@ -24,7 +24,7 @@ export default function Command() {
         quality: values.quality as Quality,
         format: values.format as OutputFormat,
       };
-      push(<ResultView request={request} />);
+      push(<Result request={request} />);
     },
   });
 
