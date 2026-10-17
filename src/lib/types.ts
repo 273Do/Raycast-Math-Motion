@@ -15,3 +15,9 @@ export type MotionResult = {
 };
 
 export type GenerationStage = "generating-code" | "rendering" | "done";
+
+export type EnvironmentStatus = {
+  python?: string;
+  manim?: string;
+  latex?: string;
+};
