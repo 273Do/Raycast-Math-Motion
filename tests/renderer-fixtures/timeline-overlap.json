@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "title": "Sequential and Concurrent Motion",
+  "scene": { "width": 1280, "height": 720, "fps": 30, "background": "#101014", "duration": 7 },
+  "objects": [
+    {
+      "id": "circle",
+      "type": "circle",
+      "position": [-3, 0],
+      "style": { "color": "#58C4DD", "opacity": 1, "scale": 1 },
+      "data": { "radius": 1 }
+    },
+    {
+      "id": "square",
+      "type": "rectangle",
+      "position": [3, 0],
+      "style": { "color": "#FF6363", "opacity": 1, "scale": 1 },
+      "data": { "width": 2, "height": 2 }
+    },
+    {
+      "id": "dot",
+      "type": "dot",
+      "position": [0, -2],
+      "style": { "color": "#FFFFFF", "opacity": 1, "scale": 1 },
+      "data": { "radius": 0.12 }
+    }
+  ],
+  "animations": [
+    { "target": "circle", "action": "create", "start": 0, "duration": 1, "params": {} },
+    { "target": "square", "action": "create", "start": 0.5, "duration": 1, "params": {} },
+    { "target": "circle", "action": "move", "start": 1.5, "duration": 2, "params": { "to": [-3, 2] } },
+    { "target": "square", "action": "rotate", "start": 1.5, "duration": 2, "params": { "angle": 90 } },
+    { "target": "dot", "action": "fade_in", "start": 2.5, "duration": 1, "params": {} },
+    { "target": "circle", "action": "scale", "start": 4, "duration": 1, "params": { "factor": 0.5 } },
+    { "target": "dot", "action": "indicate", "start": 5, "duration": 1, "params": {} }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "title": "Square to Circle",
+  "scene": { "width": 1280, "height": 720, "fps": 30, "background": "#101014", "duration": 5 },
+  "objects": [
+    {
+      "id": "square",
+      "type": "rectangle",
+      "position": [0, 0],
+      "style": { "color": "#FF6363", "opacity": 1, "scale": 1 },
+      "data": { "width": 3, "height": 3 }
+    },
+    {
+      "id": "circle",
+      "type": "circle",
+      "position": [0, 0],
+      "style": { "color": "#58C4DD", "opacity": 1, "scale": 1 },
+      "data": { "radius": 1.5 }
+    }
+  ],
+  "animations": [
+    { "target": "square", "action": "create", "start": 0, "duration": 1, "params": {} },
+    { "target": "square", "action": "transform", "start": 1.5, "duration": 1.5, "params": { "into": "circle" } },
+    { "target": "circle", "action": "indicate", "start": 3.5, "duration": 1, "params": {} }
+  ]
+}

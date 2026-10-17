@@ -1,0 +1,57 @@
+{
+  "version": "1.0",
+  "title": "Euler's Identity",
+  "scene": {
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "background": "#101014",
+    "duration": 4
+  },
+  "objects": [
+    {
+      "id": "label",
+      "type": "text",
+      "position": [0, 2],
+      "style": {
+        "color": "#FFFFFF",
+        "opacity": 1,
+        "scale": 1
+      },
+      "data": {
+        "text": "Euler's identity",
+        "fontSize": 36
+      }
+    },
+    {
+      "id": "identity",
+      "type": "math",
+      "position": [0, 0],
+      "style": {
+        "color": "#FFFFFF",
+        "opacity": 1,
+        "scale": 1
+      },
+      "data": {
+        "latex": "\\input{/etc/passwd}",
+        "fontSize": 72
+      }
+    }
+  ],
+  "animations": [
+    {
+      "target": "label",
+      "action": "fade_in",
+      "start": 0,
+      "duration": 1,
+      "params": {}
+    },
+    {
+      "target": "identity",
+      "action": "write",
+      "start": 0.5,
+      "duration": 2,
+      "params": {}
+    }
+  ]
+}

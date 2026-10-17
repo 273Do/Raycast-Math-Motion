@@ -1,0 +1,53 @@
+{
+  "version": "1.0",
+  "title": "Rotating Circle",
+  "scene": {
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "background": "#101014",
+    "duration": 5
+  },
+  "objects": [
+    {
+      "id": "circle",
+      "type": "circle",
+      "position": [0, 0],
+      "style": {
+        "color": "#58C4DD",
+        "opacity": 1,
+        "scale": 1
+      },
+      "data": {
+        "radius": 2
+      }
+    }
+  ],
+  "animations": [
+    {
+      "target": "circle",
+      "action": "create",
+      "start": 0,
+      "duration": 1,
+      "params": {}
+    },
+    {
+      "target": "circle",
+      "action": "rotate",
+      "start": 1,
+      "duration": 2,
+      "params": {
+        "angle": 180
+      }
+    },
+    {
+      "target": "circle",
+      "action": "move",
+      "start": 2,
+      "duration": 2,
+      "params": {
+        "to": [2, 0]
+      }
+    }
+  ]
+}

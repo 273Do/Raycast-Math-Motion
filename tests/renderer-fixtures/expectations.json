@@ -1,0 +1,20 @@
+{
+  "circle-rotate.json": { "valid": true, "acceptance": [1] },
+  "latex.json": { "valid": true, "acceptance": [2] },
+  "graph.json": { "valid": true, "acceptance": [3] },
+  "timeline-overlap.json": { "valid": true, "acceptance": [4] },
+  "color.json": { "valid": true, "acceptance": [5] },
+  "transform.json": { "valid": true },
+  "primitives.json": { "valid": true },
+  "parameter-fourier.json": { "valid": true },
+  "invalid-json.json": { "valid": false, "code": "invalid_json", "acceptance": [6] },
+  "invalid-unsupported-action.json": { "valid": false, "code": "unsupported_action", "path": "animations[1].action", "acceptance": [6] },
+  "invalid-unknown-field.json": { "valid": false, "code": "unknown_field", "path": "objects[0].onClick" },
+  "invalid-reference.json": { "valid": false, "code": "unknown_reference", "path": "animations[1].target", "acceptance": [8] },
+  "invalid-exceeds-duration.json": { "valid": false, "code": "exceeds_duration", "path": "animations[1]", "acceptance": [8] },
+  "invalid-out-of-range.json": { "valid": false, "code": "out_of_range", "path": "objects[0].style.opacity", "acceptance": [8] },
+  "invalid-target-overlap.json": { "valid": false, "code": "target_overlap", "path": "animations[2]" },
+  "invalid-lifecycle.json": { "valid": false, "code": "lifecycle_violation", "path": "animations[0]" },
+  "invalid-expression.json": { "valid": false, "code": "invalid_expression", "path": "objects[1].data.expression", "acceptance": [9] },
+  "invalid-latex.json": { "valid": false, "code": "forbidden_latex", "path": "objects[1].data.latex" }
+}

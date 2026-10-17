@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "title": "Sine Graph",
+  "scene": { "width": 1280, "height": 720, "fps": 30, "background": "#101014", "duration": 5 },
+  "objects": [
+    {
+      "id": "axes",
+      "type": "axes",
+      "position": [0, 0],
+      "style": { "color": "#B8B8C8", "opacity": 1, "scale": 1 },
+      "data": { "xRange": [-6.3, 6.3], "yRange": [-1.5, 1.5] }
+    },
+    {
+      "id": "sine",
+      "type": "graph",
+      "position": [0, 0],
+      "style": { "color": "#FFC531", "opacity": 1, "scale": 1 },
+      "data": { "expression": "sin(x)", "xRange": [-6.3, 6.3], "axesId": "axes" }
+    }
+  ],
+  "animations": [
+    { "target": "axes", "action": "create", "start": 0, "duration": 1.5, "params": {} },
+    { "target": "sine", "action": "create", "start": 1.5, "duration": 2, "params": {} }
+  ]
+}

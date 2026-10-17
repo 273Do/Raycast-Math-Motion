@@ -1,0 +1,48 @@
+{
+  "version": "1.0",
+  "title": "Basic Primitives",
+  "scene": { "width": 1280, "height": 720, "fps": 30, "background": "#101014", "duration": 5 },
+  "objects": [
+    {
+      "id": "dot",
+      "type": "dot",
+      "position": [-4.5, 0],
+      "style": { "color": "#FFFFFF", "opacity": 1, "scale": 1 },
+      "data": { "radius": 0.12 }
+    },
+    {
+      "id": "line",
+      "type": "line",
+      "position": [-1.5, 0],
+      "style": { "color": "#59D499", "opacity": 1, "scale": 1 },
+      "data": { "start": [-1, -1], "end": [1, 1] }
+    },
+    {
+      "id": "arrow",
+      "type": "arrow",
+      "position": [1.5, 0],
+      "style": { "color": "#FFC531", "opacity": 1, "scale": 1 },
+      "data": { "start": [-1, 0], "end": [1, 0] }
+    },
+    {
+      "id": "triangle",
+      "type": "polygon",
+      "position": [4.5, 0],
+      "style": { "color": "#8B5CF6", "opacity": 0.8, "scale": 1 },
+      "data": {
+        "points": [
+          [0, 1],
+          [-1, -0.7],
+          [1, -0.7]
+        ]
+      }
+    }
+  ],
+  "animations": [
+    { "target": "dot", "action": "fade_in", "start": 0, "duration": 0.5, "params": {} },
+    { "target": "line", "action": "create", "start": 0.5, "duration": 1, "params": {} },
+    { "target": "arrow", "action": "create", "start": 1, "duration": 1, "params": {} },
+    { "target": "triangle", "action": "create", "start": 1.5, "duration": 1, "params": {} },
+    { "target": "dot", "action": "fade_out", "start": 3, "duration": 1, "params": {} }
+  ]
+}

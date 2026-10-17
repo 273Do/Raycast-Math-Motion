@@ -14,5 +14,6 @@ compiled_raycast_rust
 .DS_Store
 
 # generated files
-tests/
+tests/*
+!tests/renderer-fixtures/
 gen/

@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "title": "Fourier Series Approaching a Square Wave",
+  "scene": { "width": 1280, "height": 720, "fps": 30, "background": "#101014", "duration": 12 },
+  "objects": [
+    {
+      "id": "n",
+      "type": "parameter",
+      "data": { "initial": 1, "integer": true }
+    },
+    {
+      "id": "axes",
+      "type": "axes",
+      "position": [0, -0.5],
+      "style": { "color": "#B8B8C8", "opacity": 1, "scale": 1 },
+      "data": { "xRange": [-6.3, 6.3], "yRange": [-1.5, 1.5] }
+    },
+    {
+      "id": "formula",
+      "type": "math",
+      "position": [0, 3],
+      "style": { "color": "#FFFFFF", "opacity": 1, "scale": 1 },
+      "data": { "latex": "f_n(x) = \\frac{4}{\\pi} \\sum_{k=1}^{n} \\frac{\\sin((2k-1)x)}{2k-1}", "fontSize": 40 }
+    },
+    {
+      "id": "fourier_curve",
+      "type": "graph",
+      "position": [0, -0.5],
+      "style": { "color": "#8B5CF6", "opacity": 1, "scale": 1 },
+      "data": {
+        "expression": "(4 / pi) * sum(k, 1, n, sin((2 * k - 1) * x) / (2 * k - 1))",
+        "xRange": [-6.3, 6.3],
+        "axesId": "axes"
+      }
+    }
+  ],
+  "animations": [
+    { "target": "axes", "action": "create", "start": 0, "duration": 1, "params": {} },
+    { "target": "formula", "action": "write", "start": 0, "duration": 1.5, "params": {} },
+    { "target": "fourier_curve", "action": "create", "start": 1, "duration": 1.5, "params": {} },
+    { "target": "n", "action": "animate_parameter", "start": 3, "duration": 8, "params": { "to": 15 } }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "title": "Colored Objects",
+  "scene": { "width": 1280, "height": 720, "fps": 30, "background": "#101014", "duration": 4 },
+  "objects": [
+    {
+      "id": "red_circle",
+      "type": "circle",
+      "position": [-3, 0],
+      "style": { "color": "#FF0000", "opacity": 1, "scale": 1 },
+      "data": { "radius": 1 }
+    },
+    {
+      "id": "green_square",
+      "type": "rectangle",
+      "position": [0, 0],
+      "style": { "color": "#00FF00", "opacity": 1, "scale": 1 },
+      "data": { "width": 2, "height": 2 }
+    },
+    {
+      "id": "blue_text",
+      "type": "text",
+      "position": [3, 0],
+      "style": { "color": "#0000FF", "opacity": 1, "scale": 1 },
+      "data": { "text": "Blue", "fontSize": 48 }
+    }
+  ],
+  "animations": [
+    { "target": "red_circle", "action": "create", "start": 0, "duration": 1, "params": {} },
+    { "target": "green_square", "action": "create", "start": 0, "duration": 1, "params": {} },
+    { "target": "blue_text", "action": "write", "start": 0, "duration": 1, "params": {} }
+  ]
+}
