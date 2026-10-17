@@ -1,12 +1,12 @@
 import { Action, ActionPanel, Color, Detail, Icon, Keyboard, showToast, Toast } from "@raycast/api";
 import { useEffect, useState } from "react";
-import { generateMotion } from "../lib/generate";
-import { GenerationStage, MotionRequest, MotionResult } from "../lib/types";
-import { FORMAT_OPTIONS, QUALITY_OPTIONS, STAGE_LABELS } from "../constants";
+import { generateMotion } from "@/lib/generate";
+import { GenerationStage, MotionRequest, MotionResult } from "@/lib/types";
+import { FORMAT_OPTIONS, QUALITY_OPTIONS, STAGE_LABELS } from "@/constants";
 
 type Props = { request: MotionRequest };
 
-export function ResultView({ request }: Props) {
+export function Result({ request }: Props) {
   const [stage, setStage] = useState<GenerationStage>("generating-code");
   const [result, setResult] = useState<MotionResult>();
   const [error, setError] = useState<Error>();
@@ -86,7 +86,12 @@ export function ResultView({ request }: Props) {
   );
 }
 
-function buildMarkdown(request: MotionRequest, stage: GenerationStage, result?: MotionResult, error?: Error): string {
+const buildMarkdown = (
+  request: MotionRequest,
+  stage: GenerationStage,
+  result?: MotionResult,
+  error?: Error,
+): string => {
   const prompt = `## Prompt\n\n> ${request.prompt.replace(/\n/g, "\n> ")}\n\n---\n\n`;
 
   if (error) {
@@ -105,4 +110,4 @@ function buildMarkdown(request: MotionRequest, stage: GenerationStage, result?: 
     : "_Preview will appear here once rendering is implemented._";
 
   return `${prompt}\n\n## Preview\n\n${preview}\n\n## Manim Code\n\n\`\`\`python\n${code}\`\`\``;
-}
+};

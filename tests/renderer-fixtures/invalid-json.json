@@ -1,0 +1,5 @@
+{
+  "version": "1.0",
+  "title": "Broken",
+  "scene": { "width": 1280, "height": 720, "fps": 30, "background": "#101014", "duration": 4 },
+  "objects": [
