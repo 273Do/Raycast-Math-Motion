@@ -7,31 +7,31 @@ import { FORMAT_OPTIONS, QUALITY_OPTIONS, STAGE_LABELS } from "@/constants";
 type Props = { request: MotionRequest };
 
 export function Result({ request }: Props) {
-  const [stage, setStage] = useState<GenerationStage>("generating-code");
+  const [stage, setStage] = useState<GenerationStage>("generating-blueprint");
   const [result, setResult] = useState<MotionResult>();
   const [error, setError] = useState<Error>();
   const [runId, setRunId] = useState(0);
 
   useEffect(() => {
-    let cancelled = false;
+    // Aborting also stops the renderer when the view is closed or regenerated.
+    const controller = new AbortController();
+    const cancelled = () => controller.signal.aborted;
     setResult(undefined);
     setError(undefined);
 
-    generateMotion(request, (s) => !cancelled && setStage(s))
+    generateMotion(request, (s) => !cancelled() && setStage(s), controller.signal)
       .then((r) => {
-        if (cancelled) return;
+        if (cancelled()) return;
         setResult(r);
         showToast({ style: Toast.Style.Success, title: "Animation ready" });
       })
       .catch((e: Error) => {
-        if (cancelled) return;
+        if (cancelled()) return;
         setError(e);
         showToast({ style: Toast.Style.Failure, title: "Generation failed", message: e.message });
       });
 
-    return () => {
-      cancelled = true;
-    };
+    return () => controller.abort();
   }, [request, runId]);
 
   const isLoading = !result && !error;
@@ -56,23 +56,26 @@ export function Result({ request }: Props) {
           {result && (
             <>
               <Detail.Metadata.Separator />
-              <Detail.Metadata.Label title="Scene" text={result.sceneName} />
+              <Detail.Metadata.Label title="Title" text={result.blueprint.title} />
+              <Detail.Metadata.Label title="Length" text={`${result.blueprint.scene.duration}s`} />
               <Detail.Metadata.Label title="Elapsed" text={`${(result.durationMs / 1000).toFixed(1)}s`} />
-              {result.outputPath && <Detail.Metadata.Label title="Output" text={result.outputPath} />}
+              <Detail.Metadata.Label title="Output" text={result.outputPath} />
             </>
           )}
         </Detail.Metadata>
       }
       actions={
         <ActionPanel>
-          {result?.outputPath && (
+          {result && (
             <ActionPanel.Section>
               <Action.Open title="Open Animation" target={result.outputPath} icon={Icon.Play} />
               <Action.ShowInFinder path={result.outputPath} />
             </ActionPanel.Section>
           )}
           <ActionPanel.Section>
-            {result && <Action.CopyToClipboard title="Copy Manim Code" content={result.code} />}
+            {result && (
+              <Action.CopyToClipboard title="Copy Blueprint" content={JSON.stringify(result.blueprint, null, 2)} />
+            )}
             <Action
               title="Regenerate"
               icon={Icon.ArrowClockwise}
@@ -101,13 +104,13 @@ const buildMarkdown = (
     return `${prompt}_${STAGE_LABELS[stage]}_`;
   }
 
-  const { code, outputPath } = result;
+  const { blueprint, outputPath } = result;
 
-  const preview = outputPath
-    ? request.format === "gif"
+  const preview =
+    request.format === "gif"
       ? `![preview](${encodeURI(`file://${outputPath}`)})`
-      : `🎬 Rendered to \`${outputPath}\` — press ↵ to open.`
-    : "_Preview will appear here once rendering is implemented._";
+      : `🎬 Rendered to \`${outputPath}\` — press ↵ to open.`;
+  const json = JSON.stringify(blueprint, null, 2);
 
-  return `${prompt}\n\n## Preview\n\n${preview}\n\n## Manim Code\n\n\`\`\`python\n${code}\`\`\``;
+  return `${prompt}\n\n## Preview\n\n${preview}\n\n## Blueprint\n\n\`\`\`json\n${json}\n\`\`\``;
 };

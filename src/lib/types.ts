@@ -1,3 +1,5 @@
+import { Blueprint } from "@/schema";
+
 export type Quality = "low" | "medium" | "high";
 export type OutputFormat = "mp4" | "gif";
 
@@ -8,13 +10,12 @@ export type MotionRequest = {
 };
 
 export type MotionResult = {
-  sceneName: string;
-  code: string;
-  outputPath?: string;
+  blueprint: Blueprint;
+  outputPath: string;
   durationMs: number;
 };
 
-export type GenerationStage = "generating-code" | "rendering" | "done";
+export type GenerationStage = "generating-blueprint" | "rendering" | "done";
 
 export type EnvironmentStatus = {
   python?: string;

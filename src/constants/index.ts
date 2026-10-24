@@ -6,10 +6,10 @@ export const EXAMPLE_PROMPTS = [
   "Animate a point on the unit circle and its relationship to the sine wave",
 ];
 
-export const QUALITY_OPTIONS: { value: Quality; title: string; flag: string }[] = [
-  { value: "low", title: "Low (480p15)", flag: "-ql" },
-  { value: "medium", title: "Medium (720p30)", flag: "-qm" },
-  { value: "high", title: "High (1080p60)", flag: "-qh" },
+export const QUALITY_OPTIONS: { value: Quality; title: string }[] = [
+  { value: "low", title: "Low (480p15)" },
+  { value: "medium", title: "Medium (720p30)" },
+  { value: "high", title: "High (1080p60)" },
 ];
 
 export const FORMAT_OPTIONS: { value: OutputFormat; title: string }[] = [
@@ -18,7 +18,7 @@ export const FORMAT_OPTIONS: { value: OutputFormat; title: string }[] = [
 ];
 
 export const STAGE_LABELS: Record<GenerationStage, string> = {
-  "generating-code": "Generating Manim code…",
+  "generating-blueprint": "Generating blueprint…",
   rendering: "Rendering animation…",
   done: "Done",
 };
