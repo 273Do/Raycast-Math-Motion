@@ -1,5 +1,6 @@
 import { environment } from "@raycast/api";
 import { execFile, spawn } from "node:child_process";
+import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
 import { EnvironmentStatus } from "@/lib/types";
@@ -9,7 +10,7 @@ const execFileAsync = promisify(execFile);
 const isWindows = process.platform === "win32";
 
 const EXTRA_PATHS = isWindows ? [] : ["/opt/homebrew/bin", "/usr/local/bin", "/Library/TeX/texbin"];
-const ENV = { ...process.env, PATH: [...EXTRA_PATHS, process.env.PATH].join(path.delimiter) };
+export const ENV = { ...process.env, PATH: [...EXTRA_PATHS, process.env.PATH].join(path.delimiter) };
 
 const SYSTEM_PYTHON = isWindows ? "python" : "python3";
 
@@ -17,6 +18,9 @@ export const VENV_DIR = path.join(environment.supportPath, "venv");
 export const VENV_PYTHON = isWindows
   ? path.join(VENV_DIR, "Scripts", "python.exe")
   : path.join(VENV_DIR, "bin", "python");
+
+export const RENDER_SCRIPT = path.join(environment.assetsPath, "renderer", "render.py");
+export const OUTPUT_DIR = path.join(os.homedir(), "Downloads");
 
 const tryRun = async (command: string, args: string[]): Promise<string | undefined> => {
   try {
@@ -27,11 +31,13 @@ const tryRun = async (command: string, args: string[]): Promise<string | undefin
   }
 };
 
+export const findLatex = () => tryRun("latex", ["--version"]);
+
 export const checkEnvironment = async (): Promise<EnvironmentStatus> => {
   const [python, manim, latex] = await Promise.all([
     tryRun(SYSTEM_PYTHON, ["--version"]),
     tryRun(VENV_PYTHON, ["-c", "import importlib.metadata as m; print(m.version('manim'))"]),
-    tryRun("latex", ["--version"]),
+    findLatex(),
   ]);
   return { python, manim, latex };
 };
