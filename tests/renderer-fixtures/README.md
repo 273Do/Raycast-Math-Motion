@@ -16,6 +16,8 @@ These are decisions not spelled out in the spec. The schema (`src/schema/bluepri
 - **Intervals** are half-open `[start, start + duration)`. Two animations on the same target may touch (one ends when the next starts) but not overlap.
 - **Lifecycle:** `create` / `write` / `fade_in` are entrance actions. `transform` exits its `target` and enters `params.into` (`ReplacementTransform`).
 - **`parameter`** objects are not drawn and have no `position` / `style`. They need no entrance action. Graph expressions reference them by `id`.
+- **`graph`** is drawn in its axes' coordinates; its own `position` and `style.scale` are not used. A graph that references parameters is redrawn every frame.
+- **Shapes** (`circle`, `rectangle`, `polygon`, `line`) are outlines; `dot`, `arrow` tips, `text`, and `math` are filled.
 - **Expressions** use `^` for powers, the variable `x`, parameter ids, `pi`, `e`, common functions (`sin`, `cos`, `exp`, …), and `sum(k, from, to, expr)`.
 
 ## Object `data` / action `params` used
@@ -40,6 +42,16 @@ These are decisions not spelled out in the spec. The schema (`src/schema/bluepri
 | `scale`                                              | `factor`            |
 | `transform`                                          | `into: <object id>` |
 | `animate_parameter`                                  | `to`                |
+
+## Renderer
+
+`assets/renderer/render.py` renders a fixture with Manim:
+
+```sh
+"$MANIM_PYTHON" assets/renderer/render.py tests/renderer-fixtures/graph.json --output out.mp4 --quality low
+```
+
+`npm run test:renderer` renders every valid fixture and checks the frame count. It renders with the extension's venv (installed from the setup screen) on macOS, or with `MANIM_PYTHON` when set. Fixtures with `math` objects are skipped when LaTeX is not installed.
 
 ## Notes
 
