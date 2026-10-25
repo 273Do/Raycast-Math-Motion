@@ -5,6 +5,7 @@ export type OutputFormat = "mp4" | "gif";
 
 export type MotionRequest = {
   prompt: string;
+  model: string;
   quality: Quality;
   format: OutputFormat;
 };
@@ -15,7 +16,7 @@ export type MotionResult = {
   durationMs: number;
 };
 
-export type GenerationStage = "generating-blueprint" | "rendering" | "done";
+export type GenerationStage = "generating-blueprint" | "repairing-blueprint" | "rendering" | "done";
 
 export type EnvironmentStatus = {
   python?: string;

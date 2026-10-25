@@ -1,9 +1,15 @@
+import { getPreferenceValues } from "@raycast/api";
 import path from "node:path";
 import { ENV, findLatex, OUTPUT_DIR, RENDER_SCRIPT, VENV_PYTHON } from "@/lib/environment";
-import { PLACEHOLDER_BLUEPRINT } from "@/lib/placeholder-blueprint";
+import { normalizeBlueprint } from "@/lib/normalize";
+import { chat, toOllamaFormat } from "@/lib/ollama";
+import { buildMessages, buildRepairMessages } from "@/lib/prompt";
 import { renderBlueprint } from "@/lib/render";
 import { GenerationStage, MotionRequest, MotionResult } from "@/lib/types";
-import { Blueprint, BlueprintIssue, validateBlueprint } from "@/schema";
+import { Blueprint, BlueprintIssue, toBlueprintJsonSchema, validateBlueprint, validateBlueprintJson } from "@/schema";
+
+// Times the model may retry after returning an invalid blueprint.
+const MAX_REPAIRS = 2;
 
 export const generateMotion = async (
   request: MotionRequest,
@@ -13,7 +19,7 @@ export const generateMotion = async (
   const startedAt = Date.now();
 
   onStage("generating-blueprint");
-  const blueprint = await generateBlueprint();
+  const blueprint = await generateBlueprint(request, onStage, signal);
 
   onStage("rendering");
   if (blueprint.objects.some((object) => object.type === "math") && !(await findLatex())) {
@@ -33,13 +39,37 @@ export const generateMotion = async (
   return { blueprint, outputPath, durationMs: Date.now() - startedAt };
 };
 
-// TODO: Generate the blueprint from the request with an LLM.
-const generateBlueprint = async (): Promise<Blueprint> => {
-  const result = validateBlueprint(PLACEHOLDER_BLUEPRINT);
-  if (!result.ok) {
-    throw new Error(`The generated blueprint is invalid:\n\n${formatIssues(result.errors)}`);
+const generateBlueprint = async (
+  { prompt, model }: MotionRequest,
+  onStage: (stage: GenerationStage) => void,
+  signal?: AbortSignal,
+): Promise<Blueprint> => {
+  const { ollamaUrl } = getPreferenceValues<Preferences>();
+  const format = toOllamaFormat(toBlueprintJsonSchema()) as object;
+  let messages = buildMessages(prompt);
+
+  for (let attempt = 0; ; attempt++) {
+    const reply = await chat({ baseUrl: ollamaUrl, model, messages, format, temperature: 0.2, signal });
+    const result = validateReply(reply);
+    if (result.ok) return result.blueprint;
+
+    if (attempt >= MAX_REPAIRS) {
+      throw new Error(`The generated blueprint is invalid:\n\n${formatIssues(result.errors)}`);
+    }
+    onStage("repairing-blueprint");
+    messages = buildRepairMessages(messages, reply, result.errors);
   }
-  return result.blueprint;
+};
+
+const validateReply = (reply: string) => {
+  let input: unknown;
+  try {
+    input = JSON.parse(reply);
+  } catch {
+    // Reports the parse error as an issue.
+    return validateBlueprintJson(reply);
+  }
+  return validateBlueprint(normalizeBlueprint(input));
 };
 
 const formatIssues = (issues: BlueprintIssue[]): string => {

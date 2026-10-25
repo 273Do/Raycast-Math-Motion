@@ -51,6 +51,7 @@ export function Result({ request }: Props) {
               color={error ? Color.Red : result ? Color.Green : Color.Yellow}
             />
           </Detail.Metadata.TagList>
+          <Detail.Metadata.Label title="Model" text={request.model} />
           <Detail.Metadata.Label title="Quality" text={quality?.title} />
           <Detail.Metadata.Label title="Format" text={format?.title} />
           {result && (

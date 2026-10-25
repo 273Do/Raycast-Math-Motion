@@ -3,9 +3,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { after, describe, test } from "node:test";
-import { PLACEHOLDER_BLUEPRINT } from "@/lib/placeholder-blueprint";
+import { EXAMPLE_BLUEPRINT } from "@/lib/prompt";
 import { renderBlueprint, RenderError } from "@/lib/render";
-import { Blueprint, validateBlueprint } from "@/schema";
+import { Blueprint } from "@/schema";
 
 // The venv the extension's setup screen installs Manim into, or MANIM_PYTHON.
 const PYTHON =
@@ -26,24 +26,19 @@ const options = (name: string, signal?: AbortSignal) => ({
 });
 
 describe("renderBlueprint", { skip }, () => {
-  test("placeholder blueprint is valid", () => {
-    const result = validateBlueprint(PLACEHOLDER_BLUEPRINT);
-    assert.ok(result.ok && result.warnings.length === 0, JSON.stringify(result));
-  });
-
   test("renders an mp4", async () => {
-    const output = await renderBlueprint(PLACEHOLDER_BLUEPRINT, options("placeholder.mp4"));
-    assert.equal(output, fs.realpathSync(path.join(OUTPUT_DIR, "placeholder.mp4")));
+    const output = await renderBlueprint(EXAMPLE_BLUEPRINT, options("example.mp4"));
+    assert.equal(output, fs.realpathSync(path.join(OUTPUT_DIR, "example.mp4")));
     assert.ok(fs.statSync(output).size > 0);
   });
 
   test("renders a gif", async () => {
-    const output = await renderBlueprint(PLACEHOLDER_BLUEPRINT, options("placeholder.gif"));
+    const output = await renderBlueprint(EXAMPLE_BLUEPRINT, options("example.gif"));
     assert.equal(fs.readFileSync(output).subarray(0, 6).toString(), "GIF89a");
   });
 
   test("reports a rejected blueprint", async () => {
-    const blueprint = structuredClone(PLACEHOLDER_BLUEPRINT);
+    const blueprint = structuredClone(EXAMPLE_BLUEPRINT);
     (blueprint.animations[0] as { action: string }).action = "explode";
 
     await assert.rejects(renderBlueprint(blueprint as Blueprint, options("rejected.mp4")), (error) => {
@@ -56,7 +51,7 @@ describe("renderBlueprint", { skip }, () => {
 
   test("stops the renderer when aborted", async () => {
     const controller = new AbortController();
-    const rendering = renderBlueprint(PLACEHOLDER_BLUEPRINT, options("aborted.mp4", controller.signal));
+    const rendering = renderBlueprint(EXAMPLE_BLUEPRINT, options("aborted.mp4", controller.signal));
     setTimeout(() => controller.abort(), 100);
 
     await assert.rejects(rendering, { name: "AbortError" });
