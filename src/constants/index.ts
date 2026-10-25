@@ -19,6 +19,7 @@ export const FORMAT_OPTIONS: { value: OutputFormat; title: string }[] = [
 
 export const STAGE_LABELS: Record<GenerationStage, string> = {
   "generating-blueprint": "Generating blueprint…",
+  "repairing-blueprint": "Fixing invalid blueprint…",
   rendering: "Rendering animation…",
   done: "Done",
 };
