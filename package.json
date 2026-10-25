@@ -2,12 +2,24 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "math-motion",
   "title": "Math Motion",
-  "description": "Create Manim math animations from natural language prompts",
+  "description": "Create math animations with Manim from natural language, using a local LLM through Ollama",
   "icon": "extension-icon.png",
   "author": "273",
   "platforms": [
     "macOS",
     "Windows"
+  ],
+  "categories": [
+    "Media",
+    "Productivity"
+  ],
+  "keywords": [
+    "manim",
+    "math",
+    "animation",
+    "ollama",
+    "llm",
+    "latex"
   ],
   "license": "MIT",
   "commands": [
@@ -23,9 +35,10 @@
     {
       "name": "ollamaUrl",
       "title": "Ollama URL",
-      "description": "Base URL of the Ollama server",
+      "description": "Base URL of the Ollama server that generates the animation",
       "type": "textfield",
       "required": true,
+      "placeholder": "http://localhost:11434",
       "default": "http://localhost:11434"
     }
   ],
